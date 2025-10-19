@@ -1,0 +1,34 @@
+/* 헤더 전체 */
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 16px;
+  background-color: #f8f8f8;
+  border-bottom: 1px solid #ddd;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
+/* 뒤로가기 버튼 */
+.back-btn {
+  font-size: 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* 앱 이름 */
+.app-title {
+  margin: 0;
+  font-size: 20px;
+  flex: 1;
+  text-align: center;
+}
+
+/* 프로필 버튼 */
+.profile-btn {
+  font-size: 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
