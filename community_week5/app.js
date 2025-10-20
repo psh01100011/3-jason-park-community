@@ -18,7 +18,7 @@ app.get('/regist', (req, res) => {
 });
 
 
-// public 폴더 내의 정적 파일 제공
+// public 폴더
 // js 파일
 app.get(/.*\.js$/, (req, res) => {
   res.type('application/javascript');
@@ -31,7 +31,7 @@ app.get(/.*\.css$/, (req, res) => {
   res.sendFile(__dirname + req.path);
 });
 
-//api 관련
+//백엔드 api 관련
 
 //프록시 로그인 처리
 app.post('/auth/login', async (req, res) => {
@@ -99,8 +99,8 @@ app.get('/users/me', async (req, res) => {
 app.get('/api/posts', async (req, res) => {
   const { lastPostId, limit } = req.query;
   try {
-    const upstream = await fetch(`http://localhost:8080/api/v1/posts?lastPostId=${lastPostId || ''}&limit=${limit || 5}`);
-    const data = await upstream.json();
+    const response = await fetch(`http://localhost:8080/api/v1/posts?lastPostId=${lastPostId || ''}&limit=${limit || 5}`);
+    const data = await response.json();
     res.json(data);
   } catch (err) {
     console.error('프록시 오류:', err);
