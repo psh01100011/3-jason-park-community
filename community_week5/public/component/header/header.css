@@ -7,6 +7,8 @@
   background-color: #f8f8f8;
   border-bottom: 1px solid #ddd;
   font-family: 'Noto Sans KR', sans-serif;
+  box-sizing: border-box; 
+  max-width: 100%;
 }
 
 /* 뒤로가기 버튼 */

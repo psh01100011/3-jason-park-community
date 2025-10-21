@@ -74,11 +74,11 @@ app.get('/users/me', async (req, res) => {
     try {
         const cookieHeader = req.headers.cookie || '';
         const response = await fetch('http://localhost:8080/api/v1/users/me', {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'Cookie': cookieHeader 
-        }
+          method: 'GET',
+          headers: {
+              'Content-Type': 'application/json',
+              'Cookie': cookieHeader 
+          }
         });
         // 백엔드에서 내려온 데이터를 그대로 전달
         const text = await response.text();
@@ -107,6 +107,53 @@ app.get('/api/posts', async (req, res) => {
     res.status(500).json({ message: '게시물 가져오기 실패' });
   }
 });
+
+
+app.post('/users/email', async (req, res) => {
+  const email= req.body;
+  try {
+    const response = await fetch('http://localhost:8080/api/v1/users/email',{
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(
+        email
+      ),
+    });
+    const data = await response.json();
+    console.log('프록시 /users/email 응답:', data);
+    res.json(data);
+  
+  } catch (err) {
+    console.error('프록시 오류:', err);
+    res.status(500).json({ message: '게시물 가져오기 실패' });
+  }
+});
+
+
+app.post('/users/nickname', async (req, res) => {
+  const nickname= req.body;
+  try {
+    const response = await fetch('http://localhost:8080/api/v1/users/nickname',{
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(
+        nickname
+      ),
+    });
+    const data = await response.json();
+    console.log('프록시 /users/nickname 응답:', data);
+    res.json(data);
+  
+  } catch (err) {
+    console.error('프록시 오류:', err);
+    res.status(500).json({ message: '게시물 가져오기 실패' });
+  }
+});
+
 
 
 app.listen(port, () => {
