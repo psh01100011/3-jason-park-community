@@ -1,9 +1,14 @@
 const express = require('express');
+const cors = require('cors');
 const app = express();
 const port = 3000;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cors({
+    origin: '*',
+    credential: 'true' 
+}));
 
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/public/pages/index/index.html');
@@ -48,11 +53,18 @@ try {
       }),
     });
     if(response.status === 201){
-        res.status(200).json({
-            message: '로그인 성공',
-            success: true
-        });
-        console.log('auth/login : 로그인 성공');
+      response.headers.forEach((value, name) => {
+        if (name.toLowerCase() === 'set-cookie') {
+            res.setHeader('Set-Cookie', value);
+        }
+      });
+    
+      res.status(200).json({
+          message: '로그인 성공',
+          success: true
+      });
+      console.log('auth/login : 로그인 성공');
+        
     }
     else{
         res.status(401).json({
@@ -72,7 +84,9 @@ try {
 app.get('/users/me', async (req, res) => {
     console.log('users/me 호출됨');
     try {
-        const cookieHeader = req.headers.cookie || '';
+        const cookieHeader = req.headers.cookie || '1';
+        console.log('users/me 요청 쿠키:', cookieHeader);
+
         const response = await fetch('http://localhost:8080/api/v1/users/me', {
           method: 'GET',
           headers: {

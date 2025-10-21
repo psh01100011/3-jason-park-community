@@ -42,7 +42,10 @@ document.addEventListener('DOMContentLoaded', async () =>{
                     throw new Error('로그인 요청 실패');
                 }
                 // 메인 페이지로 이동
-                window.location.href = '/';
+                response.headers.forEach((value, name) => {
+                    console.log(`${name}: ${value}`);
+                });
+                //window.location.href = '/';
         
 
             } catch (err) {
