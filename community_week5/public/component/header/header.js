@@ -27,7 +27,7 @@ export function loadHeader() {
     try {
         const response = await fetch('/users/me', {
             method: 'GET',
-            credentials: 'include' // 세션 인증 필요 시
+            //credentials: 'include' // 세션 인증 필요 시
         });
 
         const data = await response.json();

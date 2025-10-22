@@ -36,16 +36,12 @@ document.addEventListener('DOMContentLoaded', async () =>{
                         password: password
                     }),
                     credentials: 'include'
-                });
+                });  
 
                 if (response.status !== 200) {
                     throw new Error('로그인 요청 실패');
                 }
-                // 메인 페이지로 이동
-                response.headers.forEach((value, name) => {
-                    console.log(`${name}: ${value}`);
-                });
-                //window.location.href = '/';
+                window.location.href = '/';
         
 
             } catch (err) {

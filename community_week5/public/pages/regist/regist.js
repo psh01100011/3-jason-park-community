@@ -123,6 +123,41 @@ document.addEventListener('DOMContentLoaded', async () =>{
 
         }, 300));
     }
+
+    // 회원가입 버튼 이벤트
+    const registButton = document.getElementById('registButton');
+    if (registButton) {
+        registButton.addEventListener('click', async(e) => {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const nickname = document.getElementById('nickname').value;
+            const password = document.getElementById('password').value;
+            try {
+                const response = await fetch('/auth/regist', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        nickname,
+                        email,
+                        password
+                    })
+                });
+                
+                if (response.status !== 201) {
+                    throw new Error('회원가입 요청 실패');
+                }
+                alert('회원가입이 완료되었습니다. 로그인 페이지로 이동합니다.');
+                window.location.href = '/login';
+
+            } catch (err) {
+                console.error('회원가입 중 오류 발생:', err);
+                alert('회원가입에 실패했습니다. 다시 시도해주세요.');
+            }
+        });
+    }
        
     
 

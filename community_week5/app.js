@@ -2,6 +2,8 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 const port = 3000;
+const cookieParser = require('cookie-parser');
+
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -9,6 +11,7 @@ app.use(cors({
     origin: '*',
     credential: 'true' 
 }));
+app.use(cookieParser());
 
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/public/pages/index/index.html');
@@ -55,7 +58,8 @@ try {
     if(response.status === 201){
       response.headers.forEach((value, name) => {
         if (name.toLowerCase() === 'set-cookie') {
-            res.setHeader('Set-Cookie', value);
+          console.log(name,':', value);
+          res.cookie('JSESSIONID', value.split(';')[0].split('=')[1]);
         }
       });
     
@@ -168,6 +172,40 @@ app.post('/users/nickname', async (req, res) => {
   }
 });
 
+app.post('/auth/regist', async (req, res) => {
+  const { email, nickname, password } = req.body;
+  try {
+    const response = await fetch('http://localhost:8080/api/v1/users', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email,
+        nickname,
+        password
+      }),
+    });
+    if(response.status === 201){
+      res.status(201).json({
+          message: '회원가입 성공',
+          success: true
+      });
+      console.log('auth/regist : 회원가입 성공');
+        
+    }
+    else{
+        res.status(400).json({
+            message: '회원가입 실패',
+            success: false
+        });
+        console.log('auth/regist : 회원가입 실패');
+    }
+  } catch (err) {
+    console.error('회원가입 프록시 에러:', err);
+    res.status(500).json({ message: '회원가입 중 오류 발생' });
+  }
+});
 
 
 app.listen(port, () => {
