@@ -1,3 +1,12 @@
+/* 헤더 영역 */
+.header-container {
+  padding: 16px;
+  font-size: 18px;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+
 /* 헤더 전체 */
 .app-header {
   display: flex;
@@ -10,6 +19,7 @@
   box-sizing: border-box; 
   max-width: 100%;
 }
+
 
 /* 뒤로가기 버튼 */
 .back-btn {
@@ -24,8 +34,11 @@
   margin: 0;
   font-size: 20px;
   flex: 1;
+  cursor: pointer;
   text-align: center;
 }
+
+
 
 /* 프로필 버튼 */
 .profile-btn {

@@ -1,7 +1,13 @@
 import { loadHeader } from '../../component/header/header.js';
 import { fetchPosts } from '../../../api/post/post.js';
-import { setPostList } from '../../component/post/post.js';
+import { setPostList } from '../../component/postList/postList.js';
 
+if (document.getElementById('writeButton')) {
+  document.getElementById('writeButton').addEventListener('click', (e) => {
+    e.preventDefault();
+    window.location.href = '/write';
+  });
+} 
 
 
 //무한 스크롤 : 스크롤 이벤트(과도한 호출이 발생할 수 있따고 함, 나중에 디바운스나 쓰로틀, 옵저버 적용 고려)

@@ -24,6 +24,9 @@ app.get('/login', (req, res) => {
 app.get('/regist', (req, res) => {
   res.sendFile(__dirname + '/public/pages/regist/regist.html');
 });
+app.get('/write', (req, res) => {
+  res.sendFile(__dirname + '/public/pages/write/write.html');
+});
 
 
 // public 폴더
@@ -56,10 +59,14 @@ try {
       }),
     });
     if(response.status === 201){
+      const userId = await response.text();
       response.headers.forEach((value, name) => {
         if (name.toLowerCase() === 'set-cookie') {
           console.log(name,':', value);
           res.cookie('JSESSIONID', value.split(';')[0].split('=')[1]);
+          
+          console.log(userId);
+          res.cookie('userId', userId);
         }
       });
     
@@ -204,6 +211,42 @@ app.post('/auth/regist', async (req, res) => {
   } catch (err) {
     console.error('회원가입 프록시 에러:', err);
     res.status(500).json({ message: '회원가입 중 오류 발생' });
+  }
+});
+
+app.post('/posts', async (req, res) => {
+  const { title, content } = req.body;
+  const cookieHeader = req.headers.cookie || '1';
+  try {
+    const response = await fetch('http://localhost:8080/api/v1/posts', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Cookie': cookieHeader
+      },
+      body: JSON.stringify({
+        title,
+        content
+      }),
+    }); 
+    if(response.status === 201){
+      res.status(201).json({
+          message: '글 작성 성공',
+          success: true
+      });
+      console.log('posts : 글 작성 성공');
+        
+    }
+    else{
+        res.status(400).json({
+            message: '글 작성 실패',
+            success: false
+        });
+        console.log('posts : 글 작성 실패');
+    }
+  } catch (err) {
+    console.error('글 작성 프록시 에러:', err);
+    res.status(500).json({ message: '글 작성 중 오류 발생' });
   }
 });
 
