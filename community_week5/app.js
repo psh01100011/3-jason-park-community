@@ -157,8 +157,6 @@ app.get('/api/posts/:postId/comments', async (req, res) => {
 
 
 
-
-
 //프록시 게시물 상세보기
 app.get('/api/postDetail/:postId', async (req, res) => {
   console.log("게시물 상세보기 프록시 호출")
@@ -260,11 +258,51 @@ app.post('/auth/regist', async (req, res) => {
   }
 });
 
+// 댓글 작성
+app.post('/api/posts/:postId/comments', async (req, res) => {
+  const { content } = req.body;
+  const { postId } = req.params;
+
+  const cookieHeader = req.headers.cookie || '';
+  try {
+    const response = await fetch(`http://localhost:8080/api/v1/posts/${postId}/comments`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Cookie': cookieHeader
+      },
+      body: JSON.stringify({
+        content
+      }),
+    }); 
+    if(response.status === 200){
+      res.status(201).json({
+          message: '댓글 작성 성공',
+          success: true
+      });
+      console.log('댓글 작성 성공');
+        
+    }
+    else{
+        res.status(400).json({
+            message: '댓글 작성 실패',
+            success: false
+        });
+        console.log('댓글글 작성 실패');
+    }
+  } catch (err) {
+    console.error('댓글 작성 프록시 에러:', err);
+    res.status(500).json({ message: '댓글 작성 중 오류 발생' });
+  }
+
+
+});
+
 
 //게시글 작성
 app.post('/posts', async (req, res) => {
   const { title, content } = req.body;
-  const cookieHeader = req.headers.cookie || '1';
+  const cookieHeader = req.headers.cookie || '';
   try {
     const response = await fetch('http://localhost:8080/api/v1/posts', {
       method: 'POST',

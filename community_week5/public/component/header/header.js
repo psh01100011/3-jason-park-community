@@ -35,7 +35,7 @@ export function loadHeader() {
         const data = await response.json();
         
         console.log('내 프로필:', data);
-
+        
 
         alert(JSON.stringify(data, null, 2));
 
