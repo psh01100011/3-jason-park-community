@@ -49,7 +49,7 @@ app.get(/.*\.css$/, (req, res) => {
   res.sendFile(__dirname + req.path);
 });
 
-//백엔드 api 관련
+//백엔드 api 관련 (잊지않고 나중에 전부 프록시 제거하기 + url 수정하기)
 
 //프록시 로그인 처리
 app.post('/auth/login', async (req, res) => {
@@ -141,6 +141,24 @@ app.get('/api/posts', async (req, res) => {
 });
 
 
+//프록시 댓글 리스트
+app.get('/api/posts/:postId/comments', async (req, res) => {
+  const { postId } = req.params;
+  try {
+    const response = await fetch(`http://localhost:8080/api/v1/posts/${postId}/comments`);
+    const data = await response.json();
+    res.json(data);
+  } catch (err) {
+    console.error('프록시 오류:', err);
+    res.status(500).json({ message: '게시물 가져오기 실패' });
+  }
+});
+
+
+
+
+
+
 //프록시 게시물 상세보기
 app.get('/api/postDetail/:postId', async (req, res) => {
   console.log("게시물 상세보기 프록시 호출")
@@ -157,6 +175,8 @@ app.get('/api/postDetail/:postId', async (req, res) => {
 });
 
 
+
+//이메일 중복
 app.post('/users/email', async (req, res) => {
   const email= req.body;
   try {
@@ -180,6 +200,7 @@ app.post('/users/email', async (req, res) => {
 });
 
 
+//닉네임 중복
 app.post('/users/nickname', async (req, res) => {
   const nickname= req.body;
   try {
@@ -239,6 +260,8 @@ app.post('/auth/regist', async (req, res) => {
   }
 });
 
+
+//게시글 작성
 app.post('/posts', async (req, res) => {
   const { title, content } = req.body;
   const cookieHeader = req.headers.cookie || '1';

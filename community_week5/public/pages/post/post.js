@@ -1,7 +1,8 @@
 import { loadHeader } from '../../component/header/header.js';
 import { fetchPostDetail } from '../../../api/post/post.js';  
 import { setPostDetail } from '../../component/postDetail/postDetail.js';
-
+import { setCommentList } from '../../component/commentList/commentList.js';
+import { fetchComments } from '../../../api/comment/comment.js';  
 
 
 
@@ -23,13 +24,13 @@ document.addEventListener('DOMContentLoaded', async () =>{
         postId = postId.replace('/post/','');
         const postDetail = await fetchPostDetail(postId);
         console.log('작성자 id', postDetail.userId);
-        //console.log(postDetail.json());
        // 내용 채우기
        setPostDetail(postDetail);
-       //댓글 상세 내용 조회
 
-       // 댓글 채우기
-
+       //댓글 상세 내용 조회 : 미구현
+       const comments = await fetchComments(postId);
+       // 댓글 채우기 : 미구현
+        setCommentList(comments);
     }catch(err){
         console.error('게시물 로딩 중 오류 발생:', err);
         document.getElementById('post-list').innerHTML = '<p>게시물을 불러오는 중 오류가 발생했습니다.</p>';
