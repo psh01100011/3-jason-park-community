@@ -31,3 +31,16 @@ export async function fetchPosts(limit = 10) {
     isLoading = false;
   }
 }
+
+export async function fetchPostDetail(postId) {
+  try{
+    const response = await fetch(`/api/postDetail/${postId}`);
+    if(!response.ok) throw new Error('게시물 상세 요청 실패');
+    const postDetail = await response.json();
+    console.log(postDetail);
+    return postDetail;
+  }catch(err){
+    console.error('게시물 상세 로딩 오류:', err);
+    return null;
+  }
+}

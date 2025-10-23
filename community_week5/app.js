@@ -27,7 +27,14 @@ app.get('/regist', (req, res) => {
 app.get('/write', (req, res) => {
   res.sendFile(__dirname + '/public/pages/write/write.html');
 });
-
+app.get(`/post/$`, (req, res) => {
+  res.sendFile(__dirname + '/public/pages/write/write.html');
+});
+app.get('/post/:postId', (req, res) => {
+  const { postId } = req.params;
+  console.log('게시물 ID:', postId);
+  res.sendFile(__dirname + '/public/pages/post/post.html');
+});
 
 // public 폴더
 // js 파일
@@ -134,6 +141,22 @@ app.get('/api/posts', async (req, res) => {
 });
 
 
+//프록시 게시물 상세보기
+app.get('/api/postDetail/:postId', async (req, res) => {
+  console.log("게시물 상세보기 프록시 호출")
+  const { postId } = req.params;
+  try {
+    const response = await fetch(`http://localhost:8080/api/v1/posts/${postId}`);
+    const data = await response.json();
+    console.log(data);
+    res.json(data);
+  } catch (err) {
+    console.error('프록시 오류:', err);
+    res.status(500).json({ message: '게시물 가져오기 실패' });
+  }
+});
+
+
 app.post('/users/email', async (req, res) => {
   const email= req.body;
   try {
@@ -179,6 +202,8 @@ app.post('/users/nickname', async (req, res) => {
   }
 });
 
+
+//프록시 회원가입 처리
 app.post('/auth/regist', async (req, res) => {
   const { email, nickname, password } = req.body;
   try {
