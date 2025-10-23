@@ -1,6 +1,10 @@
+import { getCookie } from '../../../util/cookie.js';
+
 export function setPostDetail(postDetail) {
   const postDetailContainer = document.getElementById('post-detail-container');
 
+  const userId = getCookie('userId');
+  const authorId = postDetail.userId;
   const container = document.getElementById('post-detail-container');
   container.innerHTML = '';
 
@@ -17,11 +21,17 @@ export function setPostDetail(postDetail) {
       <span class="nickname">${postDetail.nickname}</span>
       <span class="date">${new Date(postDetail.createdAt).toLocaleString()}</span>
     </div>
+  `;
+  console.log('유저 id : ',userId)
+  console.log('작성자 id :',authorId);
+  if(userId == authorId){
+    headerEl.innerHTML +=`
     <div class="post-actions">
       <button id="editButton">수정</button>
       <button id="deleteButton">삭제</button>
     </div>
-  `;
+    `;
+  }
 
   // ✍️ 본문 내용
   const contentEl = document.createElement('div');
@@ -32,7 +42,7 @@ export function setPostDetail(postDetail) {
   const footerEl = document.createElement('div');
   footerEl.classList.add('post-detail-footer');
   footerEl.innerHTML = `
-    <button id="likeButton">❤️ 좋아요</button>
+    <button id="likeButton">❤️ 좋아요 ${postDetail.likeCount}</button>
     <span>조회수 ${postDetail.viewCount}</span>
     <span>댓글 ${postDetail.commentCount}</span>
   `;

@@ -13,7 +13,7 @@ export function setPostList(posts) {
     `;
 
     item.addEventListener('click', () => {
-      // 상세 페이지 이동 구현 필요
+      window.location.href = `/post/${post.id}`;
     });
 
 

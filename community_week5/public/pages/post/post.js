@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', async () =>{
 
         postId = postId.replace('/post/','');
         const postDetail = await fetchPostDetail(postId);
-        console.log('게시물 정보 가져오기');
+        console.log('작성자 id', postDetail.userId);
         //console.log(postDetail.json());
        // 내용 채우기
        setPostDetail(postDetail);
