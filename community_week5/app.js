@@ -47,6 +47,15 @@ app.get('/status/me', (req, res) => {
 });
 
 
+//footer 
+app.get('/terms', (req, res) => {
+  res.redirect('http://localhost:8080/api/v1/policy/terms');
+});
+app.get('/privacy', (req, res) => {
+  res.redirect('http://localhost:8080/api/v1/policy/privacy');
+});
+
+
 // public 폴더
 // js 파일
 app.get(/.*\.js$/, (req, res) => {
