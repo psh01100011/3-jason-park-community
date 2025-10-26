@@ -6,7 +6,7 @@ export function setPostList(posts) {
 
     item.innerHTML = `
       <h3>${post.title}</h3><br>
-      <small>조회수 ${post.viewCount} • 댓글수 ${post.commentCount} • 댓글수  ${post.likeCount}</small>
+      <small>조회수 ${post.viewCount} • 댓글 ${post.commentCount} • 좋아요  ${post.likeCount}</small>
       <hr>
       
       <small>${post.nickname} • ${new Date(post.createdAt).toLocaleString()}</small>
