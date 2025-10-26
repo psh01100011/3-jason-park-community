@@ -27,6 +27,10 @@ app.get('/regist', (req, res) => {
 app.get('/write', (req, res) => {
   res.sendFile(__dirname + '/public/pages/write/write.html');
 });
+app.get('/rewrite/:postId', (req, res) => {
+  const { postId } = req.params;
+  res.sendFile(__dirname + '/public/pages/write/rewrite.html');
+});
 app.get(`/post/$`, (req, res) => {
   res.sendFile(__dirname + '/public/pages/write/write.html');
 });

@@ -1,5 +1,7 @@
 import { loadHeader } from '../../component/header/header.js';
+import { fetchPostDetail } from '../../../api/post/post.js';  
 import { setWriteForm } from '../../component/writeForm/writeForm.js';
+import { setRewriteContent } from '../../component/writeForm/writeForm.js';
 import { checkSession } from '../../../util/session.js';
 document.addEventListener('DOMContentLoaded', async () =>{
     //세션 체크 위치 좀 고민해보기 -> 지금은 헤더에서도 체크 중인데, 여기서도 체크하면 중복 체크하는 중임
@@ -11,11 +13,20 @@ document.addEventListener('DOMContentLoaded', async () =>{
     //헤더 로딩
     loadHeader();
     setWriteForm();
+    //
+    let postId = window.location.pathname
+    postId = postId.replace('/rewrite/','');
+    const postDetail = await fetchPostDetail(postId);
+
+    setRewriteContent(postDetail);
+
 });
 
 
 // 글 작성 완료 버튼 -> 백엔드 연동
-const submitButton = document.getElementById('submitButton');
+//const submitButton = document.getElementById('submitButton');
+
+//수정으로 변경
 if (submitButton) {
 
     submitButton.addEventListener('click', async (e) => {

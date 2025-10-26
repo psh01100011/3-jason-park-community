@@ -16,22 +16,65 @@ export function setPostDetail(postDetail) {
   // 👤 작성자 & 작성일 & 버튼 영역
   const headerEl = document.createElement('div');
   headerEl.classList.add('post-detail-header');
-  headerEl.innerHTML = `
-    <div class="post-meta">
-      <span class="nickname">${postDetail.nickname}</span>
-      <span class="date">${new Date(postDetail.createdAt).toLocaleString()}</span>
-    </div>
-  `;
-  console.log('유저 id : ',userId)
-  console.log('작성자 id :',authorId);
-  if(userId == authorId){
-    headerEl.innerHTML +=`
-    <div class="post-actions">
-      <button id="editButton">수정</button>
-      <button id="deleteButton">삭제</button>
-    </div>
-    `;
+
+
+  headerEl.innerHTML = "";
+
+  // post-meta 영역 생성
+  const postMeta = document.createElement('div');
+  postMeta.className = 'post-meta';
+
+  // 닉네임 요소
+  const nicknameSpan = document.createElement('span');
+  nicknameSpan.className = 'nickname';
+  nicknameSpan.textContent = postDetail.nickname;
+
+  // 작성일 요소
+  const dateSpan = document.createElement('span');
+  dateSpan.className = 'date';
+  dateSpan.textContent = new Date(postDetail.createdAt).toLocaleString();
+
+  // postMeta에 요소 추가
+  postMeta.appendChild(nicknameSpan);
+  postMeta.appendChild(dateSpan);
+
+  // header에 postMeta 추가
+  headerEl.appendChild(postMeta);
+
+  console.log('유저 id : ', userId);
+  console.log('작성자 id :', authorId);
+
+  // 작성자일 경우 수정/삭제 버튼 추가
+  if (userId == authorId) {
+    const postActions = document.createElement('div');
+    postActions.className = 'post-actions';
+
+    const editButton = document.createElement('button');
+    editButton.id = 'editButton';
+    editButton.textContent = '수정';
+
+    const deleteButton = document.createElement('button');
+    deleteButton.id = 'deleteButton';
+    deleteButton.textContent = '삭제';
+
+    postActions.appendChild(editButton);
+    postActions.appendChild(deleteButton);
+    headerEl.appendChild(postActions);
+
+    // 이벤트 리스너
+
+    editButton.addEventListener('click', () => {
+      window.location.href = `/rewrite/${postDetail.id}`;
+    });
+
+    deleteButton.addEventListener('click', () => {
+      console.log('삭제 버튼 클릭됨');
+      // 삭제 로직 여기에 작성
+    });
   }
+
+  
+
 
   // ✍️ 본문 내용
   const contentEl = document.createElement('div');

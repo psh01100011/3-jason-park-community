@@ -11,3 +11,8 @@ export function setWriteForm() {
     `;
     writeForm.appendChild(postForm);
 }
+
+export function setRewriteContent(postDetail) {
+  document.getElementById('title').value = postDetail.title;
+  document.getElementById('content').textContent = postDetail.content;
+}
