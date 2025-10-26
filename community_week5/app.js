@@ -340,6 +340,45 @@ app.post('/posts', async (req, res) => {
   }
 });
 
+//게시글 수정
+app.patch('/posts/:postId', async (req, res) => {
+  const { postId } = req.params;
+  const { title, content } = req.body;
+  const cookieHeader = req.headers.cookie || '';
+  try {
+    const response = await fetch(`http://localhost:8080/api/v1/posts/${postId}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        'Cookie': cookieHeader
+      },
+      body: JSON.stringify({
+        title,
+        content
+      }),
+    }); 
+    if(response.status === 200){
+      res.status(201).json({
+          message: '글 수정 성공',
+          success: true
+      });
+      console.log('posts : 글 수정 성공');
+        
+    }
+    else{
+        res.status(400).json({
+            message: '글 수정 실패',
+            success: false
+        });
+        console.log('posts : 글 수정 실패');
+    }
+  } catch (err) {
+    console.error('글 수정 프록시 에러:', err);
+    res.status(500).json({ message: '글 수정 중 오류 발생' });
+  }
+});
+
+
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);

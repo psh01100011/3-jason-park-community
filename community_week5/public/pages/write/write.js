@@ -45,6 +45,8 @@ if (submitButton) {
                 throw new Error('글 작성 요청 실패');
             }
 
+            const postId = await response.json()
+            
             // 글 작성 성공 시 메인 페이지로 이동
             window.location.href = '/';
 
