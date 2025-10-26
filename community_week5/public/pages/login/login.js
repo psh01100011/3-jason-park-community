@@ -1,10 +1,10 @@
 import { loadHeader } from '../../component/header/header.js';
-
+import { loadFooter } from '../../component/footer/footer.js';
 
 document.addEventListener('DOMContentLoaded', async () =>{
     //헤더 로딩
     loadHeader();
-
+    loadFooter();
 
     // 회원가입 버튼 이벤트
     const signUpButton = document.getElementById('registButton');

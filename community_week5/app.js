@@ -39,6 +39,13 @@ app.get('/post/:postId', (req, res) => {
   console.log('게시물 ID:', postId);
   res.sendFile(__dirname + '/public/pages/post/post.html');
 });
+app.get('/auth/me', (req, res) => {
+  res.sendFile(__dirname + '/public/pages/profile/password.html');
+});
+app.get('/status/me', (req, res) => {
+  res.sendFile(__dirname + '/public/pages/profile/myinfo.html');
+});
+
 
 // public 폴더
 // js 파일
@@ -411,6 +418,79 @@ app.patch('/posts/:postId', async (req, res) => {
   } catch (err) {
     console.error('글 수정 프록시 에러:', err);
     res.status(500).json({ message: '글 수정 중 오류 발생' });
+  }
+});
+
+//비밀번호 수정
+app.patch('/auth/me', async (req, res) => {
+  const { password } = req.body;
+  const cookieHeader = req.headers.cookie || '';
+  try {
+    const response = await fetch('http://localhost:8080/api/v1/users/me/auth', {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        'Cookie': cookieHeader
+      },
+      body: JSON.stringify({
+        password
+      }),
+    });
+    if(response.status === 204){
+      res.status(200).json({
+          message: '비밀번호 수정 완료',
+          success: true
+      });
+      console.log('auth/regist : 비밀번호 수정 성공');
+        
+    }
+    else{
+        res.status(400).json({
+            message: '비밀번호 실패',
+            success: false
+        });
+        console.log('auth/me : 비밀번호 수정 실패');
+    }
+  } catch (err) {
+    console.error('비밀번호 프록시 에러:', err);
+    res.status(500).json({ message: '비밀번호 중 오류 발생' });
+  }
+});
+
+
+//내 정보 수정 수정
+app.patch('/me', async (req, res) => {
+  const { nickname } = req.body;
+  const cookieHeader = req.headers.cookie || '';
+  try {
+    const response = await fetch('http://localhost:8080/api/v1/users/me', {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        'Cookie': cookieHeader
+      },
+      body: JSON.stringify({
+        nickname
+      }),
+    });
+    if(response.status === 204){
+      res.status(200).json({
+          message: '내 정보 수정 완료',
+          success: true
+      });
+      console.log('auth/regist : 내 정보 수정 성공');
+        
+    }
+    else{
+        res.status(400).json({
+            message: '내 정보 실패',
+            success: false
+        });
+        console.log('auth/me : 내 정보 수정 실패');
+    }
+  } catch (err) {
+    console.error('내 정보 수정 프록시 에러:', err);
+    res.status(500).json({ message: '내 정보 수정 중 오류 발생' });
   }
 });
 

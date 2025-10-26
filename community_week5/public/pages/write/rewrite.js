@@ -3,7 +3,7 @@ import { fetchPostDetail } from '../../../api/post/post.js';
 import { setWriteForm } from '../../component/writeForm/writeForm.js';
 import { setRewriteContent } from '../../component/writeForm/writeForm.js';
 import { checkSession } from '../../../util/session.js';
-
+import { loadFooter } from '../../component/footer/footer.js';
 
 
 document.addEventListener('DOMContentLoaded', async () =>{
@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', async () =>{
     }
     //헤더 로딩
     loadHeader();
+    loadFooter();
     setWriteForm();
     //
     let postId = window.location.pathname

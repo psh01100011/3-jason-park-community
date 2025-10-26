@@ -1,4 +1,5 @@
 import { loadHeader } from '../../component/header/header.js';
+import { loadFooter } from '../../component/footer/footer.js';
 import { fetchPosts } from '../../../api/post/post.js';
 import { setPostList } from '../../component/postList/postList.js';
 
@@ -23,7 +24,7 @@ async function handleScroll() {
 document.addEventListener('DOMContentLoaded', async () =>{
     //헤더 로딩
     loadHeader();
-
+    loadFooter();
     // 게시물 리스트 채우기
     try{
         // 게시물 가져오는 api 호출 fetchPosts()

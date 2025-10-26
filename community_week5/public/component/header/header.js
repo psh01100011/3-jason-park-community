@@ -69,11 +69,11 @@ export async function loadHeader() {
 
         // 이벤트 연결
         document.getElementById('editProfileBtn').addEventListener('click', () => {
-          window.location.href = '/profile';
+          window.location.href = '/status/me';
         });
 
         document.getElementById('editPasswordBtn').addEventListener('click', () => {
-          window.location.href = '/password';
+          window.location.href = '/auth/me';
         });
 
         document.getElementById('logoutBtn').addEventListener('click', async() => {

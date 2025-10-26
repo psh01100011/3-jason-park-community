@@ -3,7 +3,7 @@ import { fetchPostDetail } from '../../../api/post/post.js';
 import { setPostDetail } from '../../component/postDetail/postDetail.js';
 import { setCommentList } from '../../component/commentList/commentList.js';
 import { fetchComments } from '../../../api/comment/comment.js';  
-
+import { loadFooter } from '../../component/footer/footer.js';
 
 
 
@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', async () =>{
     
     //헤더 로딩
     loadHeader();
+    loadFooter();
     //세션 확인
 
 
