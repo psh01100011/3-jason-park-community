@@ -76,8 +76,25 @@ export async function loadHeader() {
           window.location.href = '/password';
         });
 
-        document.getElementById('logoutBtn').addEventListener('click', () => {
-          window.location.href = '/logout';
+        document.getElementById('logoutBtn').addEventListener('click', async() => {
+          try {
+            const response = await fetch('/auth/logout', {
+                method: 'DELETE'
+            });
+
+            if(response.status == 200){
+              console.log('로그아웃 성공')
+            }
+            else{
+              console.log('로그아웃 실패')
+            }
+
+            window.location.href = '/login';
+          
+          }catch (err) {
+              console.error('프로필 표시 중 오류 발생:', err);
+              window.location.href = '/login';
+          }
         });
 
         // 메뉴 외부 클릭 시 닫기

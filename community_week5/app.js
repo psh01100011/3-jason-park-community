@@ -102,6 +102,42 @@ try {
 });
 
 
+//로그아웃
+app.delete('/auth/logout', async (req, res) => {
+  const cookieHeader = req.headers.cookie || '';
+  try {
+      const response = await fetch('http://localhost:8080/api/v1/auth', {
+        method: 'DELETE',
+        headers: {
+          'Cookie': cookieHeader 
+        }
+      });
+      if(response.status === 200){
+        console.log('auth/logout : 로그아웃 성공');
+        res.status(200).json({
+              message: '로그아웃 성공',
+              success: true
+          });
+      }
+      else{
+          res.status(401).json({
+              message: '로그아웃 실패',
+              success: false
+          });
+          console.log('auth/logout : 로그아웃 실패');
+      }
+    } catch (err) {
+      console.error('로그아웃 프록시 에러:', err);
+      res.status(500).json({ message: '로그아웃 중 오류 발생' });
+    }
+});
+
+
+
+
+
+
+
 //프록시 내 프로필
 app.get('/users/me', async (req, res) => {
     console.log('users/me 호출됨');
