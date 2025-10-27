@@ -37,13 +37,33 @@ export function setCommentList(comments) {
       editBtn.textContent = '수정';
       editBtn.classList.add('comment-edit-btn');
       // 수정 이벤트
-      // editBtn.addEventListener('click', () => { ... });
+      editBtn.addEventListener('click', () => {
+        const rewriteComment = document.createElement('div');
+         rewriteComment.classList.add("comment-write");
+        rewriteComment.innerHTML= `
+          <input type="text" id="comment-input" value = ${comment.content} placeholder="댓글을 입력하세요"/>
+          <button id="comment-submit">댓글 수정</button>
+          `;
+
+        item.appendChild(rewriteComment);
+      });
 
       const deleteBtn = document.createElement('button');
       deleteBtn.textContent = '삭제';
       deleteBtn.classList.add('comment-delete-btn');
       // 삭제 이벤트
-      // deleteBtn.addEventListener('click', () => { ... });
+      deleteBtn.addEventListener('click', () => {
+        var msg = "";
+
+        if(confirm("댓글을 삭제 하시겠습니까?")){
+            msg = "삭제 완료";
+
+        }else{
+          msg = "취소";
+        }
+
+    alert(msg);
+      });
 
       actions.appendChild(editBtn);
       actions.appendChild(deleteBtn);

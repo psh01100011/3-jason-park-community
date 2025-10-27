@@ -69,7 +69,10 @@ export function setPostDetail(postDetail) {
 
     deleteButton.addEventListener('click', () => {
       console.log('삭제 버튼 클릭됨');
-      // 삭제 로직 여기에 작성
+      const modal = document.querySelector('.modal');
+      const btnOpenPopup = document.querySelector('.btn-open-popup');
+      modal.style.display = 'block';
+      modal.classList.toggle('show');
     });
   }
 
